@@ -18,7 +18,10 @@ export type Contract<K extends ContractFactoryKey> = {
   signerBased: ContractInstance<K>
 }
 
-export type Provider = providers.StaticJsonRpcProvider | providers.Web3Provider
+export type Balance = {
+  ethAmount: BigNumberish | null
+  wEthAmount: BigNumberish | null
+}
 
 export type Wallet = {
   address: string
@@ -30,7 +33,4 @@ export type Wallet = {
   selectChain: (id: number) => Promise<void>
 }
 
-export type WalletBalance = {
-  ethAmount: BigNumberish | null
-  wEthAmount: BigNumberish | null
-}
+export type Provider = providers.StaticJsonRpcProvider | providers.Web3Provider

@@ -1,9 +1,9 @@
-import type { WalletBalance, Contract, Provider, Wallet } from '../types'
+import type { Balance, Contract, Provider, Wallet } from '../types'
 
 import { createContext } from 'react'
 
 export interface IWeb3Context {
-  balance: WalletBalance | null
+  balance: Balance | null
   provider: Provider | null
   wallet: Wallet | null
   wEthContract: Contract<'WETHContract__factory'> | null
