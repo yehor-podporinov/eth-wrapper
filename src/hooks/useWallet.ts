@@ -6,7 +6,6 @@ import {
   useWeb3ModalProvider,
 } from '@web3modal/ethers5/react'
 import { useMemo } from 'react'
-import { sleep } from '../helpers'
 import { Wallet } from '../types'
 
 export function useWallet(): Wallet {
@@ -24,12 +23,9 @@ export function useWallet(): Wallet {
     await open()
   }
 
-  const switchChain: Wallet['selectChain'] = async (id: number) => {
+  const selectChain: Wallet['selectChain'] = async (id: number) => {
     if (chainId === id) return
-
-    await switchNetwork(chainId)
-    // "onChainChanged" provider event needs time for execute
-    await sleep(2000)
+    await switchNetwork(id)
   }
 
   return {
@@ -39,6 +35,6 @@ export function useWallet(): Wallet {
     chainId,
     connect,
     disconnect,
-    selectChain: switchChain,
+    selectChain,
   }
 }
