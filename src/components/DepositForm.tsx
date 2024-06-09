@@ -1,7 +1,6 @@
 import { Button, TextField } from '@mui/material'
 import { utils } from 'ethers'
 import { FormEvent, useCallback, useContext, useState } from 'react'
-import { config } from '../config'
 import { Web3Context } from '../contexts'
 import ProgressModal from './ProgressModal'
 
