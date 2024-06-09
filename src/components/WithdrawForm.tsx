@@ -16,7 +16,7 @@ export default function WithdrawForm() {
   const [amount, setAmount] = useState('')
   const [isSubmitting, setIsSubmitting] = useState(false)
 
-  const { wEthContract, wallet } = useContext(Web3Context)
+  const { wEthContract } = useContext(Web3Context)
 
   const onSubmit = useCallback(async (event: FormEvent): Promise<void> => {
     event.preventDefault()
@@ -25,9 +25,6 @@ export default function WithdrawForm() {
     try {
       if (!wEthContract?.signerBased || !wEthContract?.providerBased)
         throw new Error('Contract unavailable')
-
-      if (!wallet) throw new Error('Wallet unavailable')
-      await wallet.selectChain(config.chainId)
 
       const decimals = await wEthContract.providerBased.decimals()
       const tx = await wEthContract.signerBased.withdraw(utils.parseUnits(amount, decimals))

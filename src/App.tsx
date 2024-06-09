@@ -6,25 +6,28 @@ import { type IWeb3Context, Web3Context } from './contexts'
 import { config } from './config'
 import './styles/app.scss'
 
-import { WalletBalance, DepositForm, WithdrawForm } from './components'
-
-import styled from 'styled-components'
-
-import { Button, ThemeProvider, createTheme } from '@mui/material'
+import { ThemeProvider, createTheme } from '@mui/material'
 import '@fontsource/roboto/300.css';
 import '@fontsource/roboto/400.css';
 import '@fontsource/roboto/500.css';
 import '@fontsource/roboto/700.css';
 
-const darkTheme = createTheme({
-  palette: { mode: 'dark' },
-})
+import {
+  ConnectButton,
+  DisconnectButton,
+  SwitchButton,
+  WalletBalance,
+  DepositForm,
+  WithdrawForm
+} from './components'
+
+import styled from 'styled-components'
 
 const StyledWrapper = styled.div`{
   display: flex;
   flex: 1;
   
-  .app__dashboard {
+  .app__content {
     margin: auto;
     display: grid;
     grid-gap: 32px;
@@ -33,6 +36,10 @@ const StyledWrapper = styled.div`{
     max-width: 300px;
   }
 }`
+
+const darkTheme = createTheme({
+  palette: { mode: 'dark' },
+})
 
 function App() {
   createWeb3Modal(config.web3ModalOptions)
@@ -55,22 +62,6 @@ function App() {
     provider
   )
 
-  const onConnectBtnClick = async () => {
-    try {
-      await wallet.connect()
-    } catch (error) {
-      console.log(error)
-    }
-  }
-
-  const onDisconnectBtnClick = async () => {
-    try {
-      await wallet.disconnect()
-    } catch (error) {
-      console.log(error)
-    }
-  }
-
   const updateBalance = useCallback(async (): Promise<void> => {
     if (!wallet.address) throw new Error('User\'s address unavailable')
 
@@ -91,22 +82,35 @@ function App() {
   }, [updateBalance])
 
   useEffect(() => {
+    if (!wallet.address) return
     onAddressChange()
   }, [wallet.address])
+
+  const childComponent = useMemo(() => {
+    switch (true) {
+      case !wallet.isConnected:
+        return <ConnectButton variant="contained" />
+      case wallet.chainId !== config.chainId:
+        return (<>
+          <SwitchButton variant="contained" />
+          <DisconnectButton />
+        </>)
+      default:
+        return (<>
+          <WalletBalance />
+          <DepositForm />
+          <WithdrawForm />
+          <DisconnectButton />
+        </>)
+    }
+  }, [wallet.chainId, wallet.isConnected])
 
   return (
     <Web3Context.Provider value={{ balance, provider, wEthContract, wallet }}>
       <ThemeProvider theme={darkTheme}>
         <StyledWrapper className="App">
-          <main className="app__dashboard">
-            {wallet.isConnected ? <>
-              <WalletBalance />
-              <DepositForm />
-              <WithdrawForm />
-              <Button onClick={onDisconnectBtnClick}>Disconnect wallet</Button>
-            </> : <>
-              <Button variant="contained" onClick={onConnectBtnClick}>Connect wallet</Button>
-            </>}
+          <main className="app__content">
+            {childComponent}
           </main>
         </StyledWrapper>
       </ThemeProvider>

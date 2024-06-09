@@ -26,8 +26,9 @@ export default function WalletBalance() {
 
   return (
     <StyledWrapper>
-      {indicators.map(indicator =>
+      {indicators.map((indicator, idx) =>
         <Typography
+          key={idx}
           variant="h6"
           component="p"
           color="text.primary"

@@ -1,4 +1,7 @@
-export { default as WalletBalance } from './WalletBalance'
+export { default as ConnectButton } from './ConnectButton'
 export { default as DepositForm } from './DepositForm'
+export { default as DisconnectButton } from './DisconnectButton'
 export { default as ProcessModal } from './ProgressModal'
+export { default as SwitchButton } from './SwitchButton'
+export { default as WalletBalance } from './WalletBalance'
 export { default as WithdrawForm } from './WithdrawForm'
