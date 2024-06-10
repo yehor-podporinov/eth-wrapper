@@ -34,3 +34,8 @@ export type Wallet = {
 }
 
 export type Provider = providers.StaticJsonRpcProvider | providers.Web3Provider
+
+export type Validator = (...params: any[]) => {
+  isValid: boolean
+  message: string
+}
