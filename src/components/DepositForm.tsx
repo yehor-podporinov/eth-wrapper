@@ -17,7 +17,7 @@ export default function DepositForm() {
   const [amount, setAmount] = useState('')
   const [isSubmitting, setIsSubmitting] = useState(false)
 
-  const { balance, wEthContract } = useContext(Web3Context)
+  const { balance, updateBalance, wEthContract } = useContext(Web3Context)
 
   const { getFieldErrorMessage, touchField, touchForm, isFieldsValid } =
     useFormValidation(
@@ -32,6 +32,15 @@ export default function DepositForm() {
         },
       },
     )
+
+  const onSuccess = useCallback(async () => {
+    try {
+      if (!updateBalance) throw new Error('updateBalance func is unavailable')
+      await updateBalance()
+    } catch (error) {
+      console.error(error)
+    }
+  }, [updateBalance])
 
   const onSubmit = useCallback(async (event: FormEvent): Promise<void> => {
     event.preventDefault()
@@ -55,6 +64,8 @@ export default function DepositForm() {
     }
 
     setIsSubmitting(false)
+
+    await onSuccess()
   }, [amount, wEthContract])
 
   return (

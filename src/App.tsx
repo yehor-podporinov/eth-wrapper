@@ -106,7 +106,7 @@ function App() {
   }, [wallet.chainId, wallet.isConnected])
 
   return (
-    <Web3Context.Provider value={{ balance, provider, wEthContract, wallet }}>
+    <Web3Context.Provider value={{ balance, provider, wEthContract, wallet, updateBalance }}>
       <ThemeProvider theme={darkTheme}>
         <StyledWrapper className="App">
           <main className="app__content">
