@@ -2,6 +2,7 @@ import { type Web3ModalOptions, defaultConfig } from '@web3modal/ethers5/react'
 import { providers } from 'ethers'
 
 type Config = {
+  githubUrl: string
   staticProvider: providers.StaticJsonRpcProvider
   web3ModalOptions: Web3ModalOptions
   chainId: number
@@ -9,6 +10,7 @@ type Config = {
 }
 
 export const config = Object.freeze<Config>({
+  githubUrl: process.env.REACT_APP_GITHUB_URL as string,
   staticProvider: new providers.StaticJsonRpcProvider(process.env.REACT_APP_CHAIN_RPC_URL),
   web3ModalOptions: {
     ethersConfig: defaultConfig({

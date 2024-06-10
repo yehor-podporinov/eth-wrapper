@@ -13,6 +13,7 @@ import '@fontsource/roboto/500.css';
 import '@fontsource/roboto/700.css';
 
 import {
+  AppFooter,
   ConnectButton,
   DisconnectButton,
   SwitchButton,
@@ -25,13 +26,14 @@ import styled from 'styled-components'
 
 const StyledWrapper = styled.div`{
   display: flex;
+  flex-direction: column;
   flex: 1;
   
   .app__content {
     margin: auto;
     display: grid;
     grid-gap: 32px;
-    padding: 8px;
+    padding: 8px 16px;
     width: 100%;
     max-width: 300px;
   }
@@ -112,6 +114,7 @@ function App() {
           <main className="app__content">
             {childComponent}
           </main>
+          <AppFooter />
         </StyledWrapper>
       </ThemeProvider>
     </Web3Context.Provider>

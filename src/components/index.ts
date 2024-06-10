@@ -1,3 +1,4 @@
+export { default as AppFooter } from './AppFooter'
 export { default as ConnectButton } from './ConnectButton'
 export { default as DepositForm } from './DepositForm'
 export { default as DisconnectButton } from './DisconnectButton'
