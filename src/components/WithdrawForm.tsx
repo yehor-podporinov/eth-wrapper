@@ -1,7 +1,9 @@
-import { Web3Context } from '../contexts'
 import { Button, TextField } from '@mui/material'
 import { utils } from 'ethers'
 import { FormEvent, useCallback, useContext, useState } from 'react'
+import { Web3Context } from '../contexts'
+import { ether, maxEther, required } from '../helpers'
+import { useFormValidation } from '../hooks'
 import ProgressModal from './ProgressModal'
 
 import styled from 'styled-components'
@@ -15,10 +17,27 @@ export default function WithdrawForm() {
   const [amount, setAmount] = useState('')
   const [isSubmitting, setIsSubmitting] = useState(false)
 
-  const { wEthContract } = useContext(Web3Context)
+  const { balance, wEthContract } = useContext(Web3Context)
+
+  const { getFieldErrorMessage, touchField, touchForm, isFieldsValid } =
+    useFormValidation(
+      { amount },
+      {
+        amount: {
+          required,
+          ether,
+          ...(balance?.wEthAmount && {
+            maxEther: maxEther(balance.wEthAmount)
+          }),
+        },
+      },
+    )
 
   const onSubmit = useCallback(async (event: FormEvent): Promise<void> => {
     event.preventDefault()
+    touchForm()
+    if (!isFieldsValid) return
+
     setIsSubmitting(true)
 
     try {
@@ -41,7 +60,10 @@ export default function WithdrawForm() {
       <TextField
         value={amount}
         placeholder="Enter amount"
+        error={!!getFieldErrorMessage('amount')}
+        helperText={getFieldErrorMessage('amount')}
         disabled={isSubmitting}
+        onBlur={() => touchField('amount')}
         onChange={event => setAmount(event.target.value)}
       />
       <Button

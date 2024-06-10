@@ -1,4 +1,4 @@
-import type { BigNumberish, providers } from 'ethers'
+import type { BigNumber, providers } from 'ethers'
 import type { factories } from './contracts'
 
 type ContractFactoryKey = keyof typeof factories
@@ -19,8 +19,8 @@ export type Contract<K extends ContractFactoryKey> = {
 }
 
 export type Balance = {
-  ethAmount: BigNumberish | null
-  wEthAmount: BigNumberish | null
+  ethAmount: BigNumber | null
+  wEthAmount: BigNumber | null
 }
 
 export type Wallet = {
