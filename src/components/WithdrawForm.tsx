@@ -58,7 +58,7 @@ export default function WithdrawForm() {
 
       await tx.wait()
     } catch (error) {
-      console.log(error)
+      console.error(error)
     }
 
     setIsSubmitting(false)

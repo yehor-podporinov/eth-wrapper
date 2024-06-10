@@ -60,7 +60,7 @@ export default function DepositForm() {
 
       await tx.wait()
     } catch (error) {
-      console.log(error)
+      console.error(error)
     }
 
     setIsSubmitting(false)

@@ -10,7 +10,7 @@ export default function ConnectButton(props: ButtonProps) {
       if (!wallet) throw new Error('Wallet unavailable')
       await wallet.connect()
     } catch (error) {
-      console.log(error)
+      console.error(error)
     }
   }, [wallet])
 

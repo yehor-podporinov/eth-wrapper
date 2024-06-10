@@ -11,7 +11,7 @@ export default function SwitchButton(props: ButtonProps) {
       if (!wallet) throw new Error('Wallet unavailable')
       await wallet.selectChain(config.chainId)
     } catch (error) {
-      console.log(error)
+      console.error(error)
     }
   }, [wallet])
 

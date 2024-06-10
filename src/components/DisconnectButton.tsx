@@ -10,7 +10,7 @@ export default function DisconnectButton(props: ButtonProps) {
       if (!wallet) throw new Error('Wallet unavailable')
       await wallet.disconnect()
     } catch (error) {
-      console.log(error)
+      console.error(error)
     }
   }, [wallet])
 

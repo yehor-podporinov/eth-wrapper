@@ -77,7 +77,7 @@ function App() {
     try {
      await updateBalance()
     } catch (error) {
-      console.log(error)
+      console.error(error)
     }
   }, [updateBalance])
 
